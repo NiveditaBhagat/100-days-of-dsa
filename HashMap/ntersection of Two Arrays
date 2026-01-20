@@ -1,0 +1,95 @@
+**Intersection of Two Arrays**
+
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
+
+
+Example 1:
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2]
+
+Example 2:
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [9,4]
+Explanation: [4,9] is also accepted.
+ 
+
+Constraints:
+1 <= nums1.length, nums2.length <= 1000
+0 <= nums1[i], nums2[i] <= 1000
+
+--------------------------------------------------------------------------------------------
+🧠 Key Insight (Core Idea)
+
+~To find common elements efficiently:
+Convert one array into a set
+Traverse the second array and check membership
+Use another set to ensure uniqueness
+
+--------------------------------------------------------------------------------------------
+
+🪜 Approach (Using Hash Set)
+
+Convert nums1 to a set (set1)
+Create an empty set (result)
+Traverse nums2:
+   - If element exists in set1, add it to result
+Convert result to a list and return
+
+--------------------------------------------------------------------------------------------
+✅ Why This Works
+
+Set lookup is O(1)
+Sets automatically handle duplicates
+Simple and optimal for this problem size
+--------------------------------------------------------------------------------------------
+🧾 Solution (Python)
+
+def intersection(nums1, nums2):
+    set1 = set(nums1)
+    result = set()
+
+    for num in nums2:
+        if num in set1:
+            result.add(num)
+
+    return list(result)
+
+--------------------------------------------------------------------------------------------
+🧪 Example Walkthrough
+
+Example 1
+nums1 = [1,2,2,1]
+nums2 = [2,2]
+
+set1 = {1, 2}
+Traverse nums2
+  * 2 in set1 → add to result
+Result = {2} → return [2]
+--------------------------------------------------------------------------------------------
+
+⏱ Time & Space Complexity
+
+Time: O(n + m)
+Space: O(n)
+
+Where:
+n = length of nums1
+m = length of nums2
+--------------------------------------------------------------------------------------------
+
+💡 Hint (For Recall)
+“Convert one array to a set and check membership from the other.”
+
+--------------------------------------------------------------------------------------------
+🚫 Common Mistakes
+
+❌ Using nested loops → O(n²)
+❌ Forgetting to remove duplicates
+❌ Sorting unnecessarily
+
+--------------------------------------------------------------------------------------------
+🔑 Pattern Name (Important for Interviews)
+
+Hashing
+Set Intersection
+Membership Checking
