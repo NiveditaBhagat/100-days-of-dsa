@@ -1,0 +1,135 @@
+** Isomorphic Strings **
+
+Given two strings s and t, determine if they are isomorphic.
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+
+ 
+Example 1:
+Input: s = "egg", t = "add"
+Output: true
+Explanation:
+The strings s and t can be made identical by:
+Mapping 'e' to 'a'.
+Mapping 'g' to 'd'.
+
+Example 2:
+Input: s = "foo", t = "bar"
+Output: false
+Explanation:
+The strings s and t can not be made identical as 'o' needs to be mapped to both 'a' and 'r'.
+
+Example 3:
+Input: s = "paper", t = "title"
+Output: true
+
+Constraints:
+1 <= s.length <= 5 * 104
+t.length == s.length
+s and t consist of any valid ascii character.
+
+-----------------------------------------------------------------------------------------------
+🧠 Core Idea (Very Important)
+
+~Two strings s and t are isomorphic if:
+Each character in s maps to exactly one character in t
+The mapping is consistent
+No two different characters in s map to the same character in t
+👉 This means the mapping must work both ways.
+
+-----------------------------------------------------------------------------------------------
+❌ Why One Map Is Not Enough
+
+Example:
+s = "ab"
+t = "aa"
+
+If you only check:
+a → a
+b → a   ❌ invalid (two chars map to same)
+
+So we need:
+s → t mapping
+t → s mapping
+-----------------------------------------------------------------------------------------------
+✅ Correct Approach (Two HashMaps)
+Steps:
+If lengths differ → return False
+Create two maps:
+mapST: s → t
+mapTS: t → s
+Traverse characters together
+Validate mapping consistency
+If conflict → return False
+Otherwise → True
+
+-----------------------------------------------------------------------------------------------
+🧾 Python Solution
+
+def isIsomorphic(s, t):
+    if len(s) != len(t):
+        return False
+
+    mapST = {}
+    mapTS = {}
+
+    for i in range(len(s)):
+        c1 = s[i]
+        c2 = t[i]
+
+        # check s → t mapping
+        if c1 in mapST and mapST[c1] != c2:
+            return False
+
+        # check t → s mapping
+        if c2 in mapTS and mapTS[c2] != c1:
+            return False
+
+        mapST[c1] = c2
+        mapTS[c2] = c1
+
+    return True
+-----------------------------------------------------------------------------------------------
+🧪 Example Walkthrough
+
+Example 1
+s = "egg"
+t = "add"
+
+s	  t	  mapST	  mapTS
+e	  a	  e→a	    a→e
+g	  d	  g→d	    d→g
+g	  d	  OK	    OK
+✅ True
+
+Example 2
+s = "foo"
+t = "bar"
+
+s	    t
+f	    b
+o	    a
+o	    r ❌
+
+Conflict: o → a and o → r
+❌ False
+
+-----------------------------------------------------------------------------------------------
+⏱ Complexity
+
+Time: O(n)
+Space: O(n)
+-----------------------------------------------------------------------------------------------
+
+🧠 Pattern You Should Remember
+
+This problem is part of the:
+🔁 Bijective Mapping Pattern
+
+Used when:
+One-to-one character mapping
+Pattern matching
+
+
+
+
