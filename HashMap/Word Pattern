@@ -1,0 +1,133 @@
+** Word Pattern **
+
+Given a pattern and a string s, find if s follows the same pattern.
+Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s. Specifically:
+Each letter in pattern maps to exactly one unique word in s.
+Each unique word in s maps to exactly one letter in pattern.
+No two letters map to the same word, and no two words map to the same letter.
+ 
+
+Example 1:
+Input: pattern = "abba", s = "dog cat cat dog"
+Output: true
+Explanation:
+
+The bijection can be established as:
+'a' maps to "dog".
+'b' maps to "cat".
+
+Example 2:
+Input: pattern = "abba", s = "dog cat cat fish"
+Output: false
+
+Example 3:
+Input: pattern = "aaaa", s = "dog cat cat dog"
+Output: false
+
+ 
+
+Constraints:
+1 <= pattern.length <= 300
+pattern contains only lower-case English letters.
+1 <= s.length <= 3000
+s contains only lowercase English letters and spaces ' '.
+s does not contain any leading or trailing spaces.
+All the words in s are separated by a single space.
+
+------------------------------------------------------------------------------------------------------
+
+🧠 Core Idea
+
+~ We need a bijection between:
+a character in pattern
+a word in s
+That means:
+One character → one word
+One word → one character
+Mapping must be consistent
+👉 Exactly the same logic as Isomorphic Strings.
+
+------------------------------------------------------------------------------------------------------
+✅ Step-by-Step Approach
+
+Split string s into words
+If number of words ≠ length of pattern → return False
+Use two hash maps:
+char_to_word
+word_to_char
+Traverse both together
+Check consistency in both directions
+If conflict → False
+Otherwise → True
+
+------------------------------------------------------------------------------------------------------
+
+🧾 Python Solution
+
+class Solution(object):
+    def wordPattern(self, pattern, s):
+        """
+        :type pattern: str
+        :type s: str
+        :rtype: bool
+        """
+        
+        word_list=s.split()
+        if len(pattern) != len(word_list):
+            return False
+        pmap={}
+        smap={}
+        for index, value in enumerate(pattern):
+            c1=pattern[index]
+            c2=word_list[index]
+            if c1 in pmap and pmap[c1]!=c2:
+                return False
+            if c2 in smap and smap[c2]!=c1:
+                return False
+
+            pmap[c1]=c2
+            smap[c2]=c1
+
+        return True
+------------------------------------------------------------------------------------------------------
+
+🧪 Example Walkthrough
+~ Example 1
+pattern = "abba"
+s = "dog cat cat dog"
+Mappings:
+a → dog
+b → cat
+Consistent both ways → ✅ True
+
+~ Example 2
+pattern = "abba"
+s = "dog cat cat fish"
+Conflict:
+a → dog
+a → fish ❌
+❌ False
+
+~ Example 3
+pattern = "aaaa"
+s = "dog cat cat dog"
+Conflict:
+a → dog
+a → cat ❌
+❌ False
+
+------------------------------------------------------------------------------------------------------
+⏱ Complexity
+
+Time: O(n)
+Space: O(n)
+------------------------------------------------------------------------------------------------------
+🧠 Pattern to Remember
+
+This problem belongs to the:
+🔁 Bijection / Two-Way Mapping Pattern
+
+Same logic as:
+Isomorphic Strings
+Word Pattern
+Encode & Decode Strings
