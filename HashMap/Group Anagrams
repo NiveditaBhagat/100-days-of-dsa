@@ -1,0 +1,124 @@
+Group Anagrams
+
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+
+Example 1:
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+Explanation:
+There is no string in strs that can be rearranged to form "bat".
+The strings "nat" and "tan" are anagrams as they can be rearranged to form each other.
+The strings "ate", "eat", and "tea" are anagrams as they can be rearranged to form each other.
+
+Example 2:
+Input: strs = [""]
+Output: [[""]]
+
+Example 3:
+Input: strs = ["a"]
+Output: [["a"]]
+
+Constraints:
+1 <= strs.length <= 104
+0 <= strs[i].length <= 100
+strs[i] consists of lowercase English letters.
+
+---------------------------------------------------------------------------------------------------------------------
+🧠 Key Insight
+
+👉 Anagrams have the same character frequency
+So if two strings:
+
+"eat" → {'e':1,'a':1,'t':1}
+"tea" → {'t':1,'e':1,'a':1}
+
+Their signature is identical.
+We group strings using this signature as the hash key.
+---------------------------------------------------------------------------------------------------------------------
+✅ Approach 1 (Most Common – Sorting)
+Idea
+
+Sort each string
+Use sorted string as key
+Group original strings under that key
+---------------------------------------------------------------------------------------------------------------------
+🧾 Code (Sorting Based)
+from collections import defaultdict
+
+class Solution(object):
+    def groupAnagrams(self, strs):
+        groups = defaultdict(list)
+
+        for word in strs:
+            key = ''.join(sorted(word))
+            groups[key].append(word)
+
+        return list(groups.values())
+---------------------------------------------------------------------------------------------------------------------
+
+🧪 Example Walkthrough
+"eat" → "aet"
+"tea" → "aet"
+"ate" → "aet"
+"tan" → "ant"
+"nat" → "ant"
+"bat" → "abt"
+
+
+Groups:
+"aet": ["eat","tea","ate"]
+"ant": ["tan","nat"]
+"abt": ["bat"]
+---------------------------------------------------------------------------------------------------------------------
+⏱ Complexity
+
+Time: O(n * k log k)
+(k = max word length)
+Space: O(n)
+---------------------------------------------------------------------------------------------------------------------
+✅ Approach 2 (Optimized – Frequency Count) ⭐ INTERVIEW FAVORITE
+Idea
+Count frequency of each letter
+Use a tuple of counts as key
+---------------------------------------------------------------------------------------------------------------------
+🧾 Code (Frequency Based)
+
+from collections import defaultdict
+
+class Solution(object):
+    def groupAnagrams(self, strs):
+        groups = defaultdict(list)
+
+        for word in strs:
+            count = [0] * 26
+            for ch in word:
+                count[ord(ch) - ord('a')] += 1
+
+            groups[tuple(count)].append(word)
+
+        return list(groups.values())
+---------------------------------------------------------------------------------------------------------------------
+⏱ Complexity
+Time: O(n * k)
+Space: O(n)
+---------------------------------------------------------------------------------------------------------------------
+🧠 When to Use Which?
+Method	      Use When
+Sorting	      Simpler, readable
+Frequency	    Faster, interviewer-impressing
+---------------------------------------------------------------------------------------------------------------------
+🚨 Common Mistakes
+❌ Using list as dictionary key
+❌ Forgetting to convert count list to tuple
+❌ Sorting and storing sorted string instead of original
+
+---------------------------------------------------------------------------------------------------------------------
+🧠 Pattern to Remember
+🔑 Canonical Form / Signature Pattern
+
+Used in:
+Group Anagrams
+Valid Anagram
+Isomorphic Strings
+Word Pattern
