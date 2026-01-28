@@ -70,18 +70,18 @@ Groups:
 "aet": ["eat","tea","ate"]
 "ant": ["tan","nat"]
 "abt": ["bat"]
----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 ⏱ Complexity
 
 Time: O(n * k log k)
 (k = max word length)
 Space: O(n)
----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 ✅ Approach 2 (Optimized – Frequency Count) ⭐ INTERVIEW FAVORITE
 Idea
 Count frequency of each letter
 Use a tuple of counts as key
----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 🧾 Code (Frequency Based)
 
 from collections import defaultdict
@@ -98,22 +98,217 @@ class Solution(object):
             groups[tuple(count)].append(word)
 
         return list(groups.values())
----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+✅ Correct Approach (HashMap + Character Count)
+Step-by-step plan
+
+Create a hashmap
+👉 key = character frequency
+👉 value = list of anagrams
+
+For each word:
+Count how many times each letter appears
+Convert that count into a tuple
+Use it as a hashmap key
+Append the word to its group
+
+🧩 Why tuple?
+Lists cannot be dictionary keys
+Tuples can (they are immutable)
+
+count = [1, 0, 0, ..., 1]   ❌ cannot be key
+tuple(count)               ✅ can be key
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+🔍 Walkthrough Example
+Input
+["eat","tea","tan","ate","nat","bat"]
+
+For "eat":
+count = [1,0,0,...,1,0,...,1]
+tuple(count) → key
+groups[key] = ["eat"]
+
+For "tea":
+same count → same key
+groups[key] = ["eat","tea"]
+
+For "ate":
+same key
+groups[key] = ["eat","tea","ate"]
+
+For "tan" & "nat":
+another key
+groups[key] = ["tan","nat"]
+
+For "bat":
+new key
+groups[key] = ["bat"]
+
+📤 Final Output
+[
+  ["eat","tea","ate"],
+  ["tan","nat"],
+  ["bat"]
+]
+(Order doesn’t matter)
+-----------------------------------------------------------------------------------------------------------------------------
+🔁 Code Explanation
+
+groups = defaultdict(list)
+
+Creates a defaultdict where the default value is an empty list [].
+Purpose: We will use the frequency tuple of each word as the key, and append words to the list corresponding to that key.
+Example :-
+groups = {}
+# If key (like a frequency tuple) is missing, it will automatically create groups[key] = []
+____________________________________________________
+
+for word in strs:
+
+Loop through each word in the input list strs.
+Example:
+strs = ["eat", "tea", "tan"]
+word will first be "eat", then "tea", then "tan".
+____________________________________________________
+count = [0] * 26   # for a-z
+
+Creates a list of 26 zeros.
+Each index corresponds to a lowercase letter:
+0 → 'a', 1 → 'b', ..., 25 → 'z'.
+This list will count the frequency of each letter in the current word.
+
+Example:
+word = "eat"
+count = [0, 0, 0, ..., 0]  # 26 zeros
+____________________________________________________
+for ch in word:
+    count[ord(ch) - ord('a')] += 1
+
+Loop through each character ch in the current word.
+ord(ch) gives the ASCII code of the character.
+ord('a') is subtracted to get the index from 0 to 25
+
+3️⃣ What does ord(ch) do?
+ord() gives the ASCII number of a character.
+Examples:
+ord('a') = 97
+ord('b') = 98
+ord('e') = 101
+ord('t') = 116
+____________________________________________________
+
+1️⃣ What are ASCII numbers?
+ASCII is a standard that gives every character a number.
+Think of it like:
+“Each character has an ID number.”
+
+Examples:
+Character	ASCII number
+'a'	            97
+'b'            	98
+'c'	            99
+'d'	            100
+'e'	            101
+...	            ...
+'z'	            122
+So letters are stored as numbers internally.
+____________________________________________________
+2️⃣ Why are letters in sequence?
+ASCII is designed so that:
+'a', 'b', 'c', ... 'z' are continuous
+Each next letter = previous + 1
+
+So:
+'a' = 97
+'b' = 98
+'c' = 99
+...
+'z' = 122
+This is VERY important.
+____________________________________________________
+
+3️⃣ What problem are we solving?
+We want to store letter counts in a list:
+count = [0] * 26
+Indexes:
+0 → a
+1 → b
+2 → c
+...
+25 → z
+
+So we must convert:
+'a' → 0
+'b' → 1
+'c' → 2
+____________________________________________________
+
+4️⃣ Why subtract 'a'?
+Let’s see what happens:
+For 'a'
+ord('a') - ord('a') = 97 - 97 = 0
+
+For 'b'
+ord('b') - ord('a') = 98 - 97 = 1
+
+For 'e'
+ord('e') - ord('a') = 101 - 97 = 4
+
+For 'z'
+ord('z') - ord('a') = 122 - 97 = 25
+____________________________________________________
+
+Example with "eat":
+ch	    ord(ch)	   ord(ch) - ord('a')	  count after increment
+e	      101	          4	                    count[4] = 1
+a	      97	          0	                    count[0] = 1
+t	      116	          19	                count[19] = 1
+
+Final count for "eat":
+[1, 0, 0, 0, 1, 0, ..., 1, ... 0]  # only indices 0(a), 4(e), 19(t) = 1
+
+____________________________________________________
+
+groups[tuple(count)].append(word)
+
+tuple(count) converts the count list to a tuple (immutable).
+Tuples can be used as dictionary keys, lists cannot.
+Append the current word to the list corresponding to its frequency tuple in groups.
+
+Example:
+key = tuple([1,0,0,0,1,0,...,1,...0])
+groups[key] = ["eat"]   # first word
+groups[key].append("tea")  # second word, same letter frequency
+groups[key].append("ate")  # third word
+
+return list(groups.values())
+groups.values() returns all the lists of words (all anagram groups).
+Convert it to a list and return.
+
+Example output:
+[
+  ["eat", "tea", "ate"],
+  ["tan", "nat"],
+  ["bat"]
+]
+-----------------------------------------------------------------------------------------------------------------------------
 ⏱ Complexity
-Time: O(n * k)
+Time: O(n * k) (k = max word length)
 Space: O(n)
----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 🧠 When to Use Which?
 Method	      Use When
 Sorting	      Simpler, readable
 Frequency	    Faster, interviewer-impressing
----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 🚨 Common Mistakes
 ❌ Using list as dictionary key
 ❌ Forgetting to convert count list to tuple
 ❌ Sorting and storing sorted string instead of original
 
----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
 🧠 Pattern to Remember
 🔑 Canonical Form / Signature Pattern
 
