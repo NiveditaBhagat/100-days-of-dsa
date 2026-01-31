@@ -1,0 +1,170 @@
+** Partition List **
+
+Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+You should preserve the original relative order of the nodes in each of the two partitions.
+
+
+Example 1:
+Input: head = [1,4,3,2,5,2], x = 3
+Output: [1,2,2,4,3,5]
+
+Example 2:
+Input: head = [2,1], x = 2
+Output: [1,2]
+ 
+
+Constraints:
+The number of nodes in the list is in the range [0, 200].
+-100 <= Node.val <= 100
+-200 <= x <= 200
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Problem Understanding (in simple words)
+
+You are given:
+A linked list
+A number x
+
+You need to:
+Put all nodes with value < x first
+Then put all nodes with value ≥ x
+
+Important:
+👉 Keep the original relative order inside both groups
+
+This is like:
+“Separate the list into two queues, then join them.”
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+❌ What NOT to do
+❌ Don’t sort the list
+❌ Don’t change node values
+❌ Don’t lose relative order
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+✅ Correct Approach (Two Dummy Lists)
+
+Create two linked lists:
+before → nodes with value < x
+after → nodes with value >= x
+
+Then connect:
+before → after
+-------------------------------------------------------------------------------------------------------------------------------------------------
+🪜 Step-by-Step Approach
+
+Create two dummy nodes
+Traverse the original list
+
+Attach each node to:
+before list if val < x
+after list if val >= x
+
+Connect the two lists
+Return before.next
+-------------------------------------------------------------------------------------------------------------------------------------------------
+✨ Why dummy nodes?
+
+They help:
+Avoid edge cases
+Easily return the head
+Keep code clean
+-------------------------------------------------------------------------------------------------------------------------------------------------
+🧩 Example Walkthrough
+
+head = [1 → 4 → 3 → 2 → 5 → 2]
+x = 3
+
+Goal:
+Nodes < 3 first
+Nodes ≥ 3 after
+Keep original order
+
+🔹 Core Idea (Very Important)
+We build two separate linked lists while traversing:
+
+1️⃣ Before list → values < x
+2️⃣ After list → values ≥ x
+
+At the end:
+Before list  →  After list
+
+🔹 Step 0: Create Dummy Nodes
+before_head → Ø
+after_head  → Ø
+
+Pointers:
+before = before_head
+after  = after_head
+curr   = head
+
+🔹 Original Linked List
+curr
+↓
+1 → 4 → 3 → 2 → 5 → 2 → None
+
+🔹 Step 1: curr = 1
+1 < 3 → goes to BEFORE list
+
+Before List :-
+before_head → 1 → Ø
+              ↑
+            before
+
+After List :-
+after_head → Ø
+             ↑
+           after
+
+Move curr →
+4 → 3 → 2 → 5 → 2
+
+🔹 Step 2: curr = 4
+4 ≥ 3 → goes to AFTER list
+
+After List
+after_head → 4 → Ø
+              ↑
+            after
+
+Before List
+before_head → 1 → Ø
+
+Move curr →
+3 → 2 → 5 → 2
+
+🔹 Step 3: 
+curr = 3
+3 ≥ 3 → goes to AFTER list
+
+After List
+after_head → 4 → 3 → Ø
+                 ↑
+               after
+
+
+Move curr →
+2 → 5 → 2
+
+🔹 Step 4: 
+curr = 2
+2 < 3 → goes to BEFORE list
+
+Before List
+before_head → 1 → 2 → Ø
+                  ↑
+                before
+
+Move curr →
+5 → 2
+
+🔹 Step 5: curr = 5
+5 ≥ 3 → goes to AFTER list
+
+After List
+after_head → 4 → 3 → 5 → Ø
+                     ↑
+                    after
+
+Move curr →
+2
