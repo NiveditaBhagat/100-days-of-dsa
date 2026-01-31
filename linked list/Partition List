@@ -165,6 +165,113 @@ After List
 after_head → 4 → 3 → 5 → Ø
                      ↑
                     after
-
 Move curr →
 2
+
+🔹 Step 6: curr = 2
+2 < 3 → goes to BEFORE list
+
+Before List
+before_head → 1 → 2 → 2 → Ø
+                              ↑
+                            before
+
+Move curr →
+None
+
+🔹 Step 7: Final Linking
+IMPORTANT
+after.next = None
+
+
+Prevents old links from causing a cycle.
+Join both lists
+before.next = after_head.next
+
+🔹 Final Structure
+before_head → 1 → 2 → 2 → 4 → 3 → 5 → None
+
+
+Return:
+[1, 2, 2, 4, 3, 5]
+
+✅ Correct output!
+
+🔹 Why Order is Preserved?
+Because:
+We append nodes, never rearrange
+Each node is visited once
+No swapping or sorting
+
+
+Diagram Summary (One Glance)
+Original:
+1 → 4 → 3 → 2 → 5 → 2
+
+Before (<3):
+1 → 2 → 2
+
+After (≥3):
+4 → 3 → 5
+
+Final:
+1 → 2 → 2 → 4 → 3 → 5
+-------------------------------------------------------------------------------------------------------------------------------------------------
+🔑 Key Interview Points
+Stable partition
+O(n) time
+O(1) extra space
+Dummy nodes simplify logic
+-------------------------------------------------------------------------------------------------------------------------------------------------
+🧪 Code (Clean & Interview-Ready)
+
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+class Solution(object):
+    def partition(self, head, x):
+        before_head = ListNode(0)
+        after_head = ListNode(0)
+
+        before = before_head
+        after = after_head
+
+        curr = head
+
+        while curr:
+            if curr.val < x:
+                before.next = curr
+                before = before.next
+            else:
+                after.next = curr
+                after = after.next
+            curr = curr.next
+
+        after.next = None          # important to avoid cycle
+        before.next = after_head.next
+
+        return before_head.next
+-------------------------------------------------------------------------------------------------------------------------------------------------
+⚠️ Very Important Line
+after.next = None
+
+Why?
+Original list still has old links
+This prevents cycles or wrong connections
+-------------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Key Takeaways (for GitHub README)
+
+Stable partition using two linked lists
+Dummy nodes simplify edge cases
+Preserves relative order
+Common pattern in linked list problems
+
+🔑 Similar Problems You Should Practice
+Merge Two Sorted Lists
+Remove Linked List Elements
+Odd Even Linked List
+Reorder List
+Palindrome Linked List
