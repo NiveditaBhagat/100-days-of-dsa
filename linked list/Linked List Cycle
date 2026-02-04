@@ -1,0 +1,140 @@
+** Linked List Cycle **
+
+Given head, the head of a linked list, determine if the linked list has a cycle in it.
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. 
+Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
+Return true if there is a cycle in the linked list. Otherwise, return false.
+
+Example 1:
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+
+Example 2:
+Input: head = [1,2], pos = 0
+Output: true
+Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+
+Example 3:
+Input: head = [1], pos = -1
+Output: false
+Explanation: There is no cycle in the linked list.
+ 
+Constraints:
+The number of the nodes in the list is in the range [0, 104].
+-105 <= Node.val <= 105
+pos is -1 or a valid index in the linked-list.
+-------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Problem in Simple Words
+
+You’re given a linked list.
+You need to check:
+❓ If by following next pointers, you ever come back to a node you’ve already visited
+If yes → ✅ cycle exists
+If no → ❌ no cycle
+-------------------------------------------------------------------------------------------------------------------------------------------
+❗ Important Note
+
+pos is only for test case creation
+You DO NOT get pos in the function
+You must detect the cycle using pointers
+-------------------------------------------------------------------------------------------------------------------------------------------
+✅ Best Approach: Floyd’s Cycle Detection Algorithm
+
+Also called:
+🐢 Slow & Fast Pointer method
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+🧩 Core Idea (Very Intuitive)
+Use two pointers
+slow → moves 1 step
+fast → moves 2 steps
+Logic:
+If there is no cycle → fast will hit None
+If there is a cycle → fast will eventually meet slow
+-------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Why this works (Think of a race track 🏃‍♂️)
+
+If two runners are on a circular track:
+One runs faster
+One runs slower
+👉 The faster one will eventually catch up to the slower one
+That’s exactly what happens in a cycle.
+-------------------------------------------------------------------------------------------------------------------------------------------
+✍️ Code (Clean & Standard)
+
+class Solution(object):
+    def hasCycle(self, head):
+        slow = head
+        fast = head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                return True
+
+        return False
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+🪜 Step-by-Step with Diagram
+
+Example 1
+head = [3,2,0,-4]
+pos = 1
+
+Actual structure:
+3 → 2 → 0 → -4
+    ↑        |
+    └────────┘
+
+Step 0: Initialization
+slow → 3
+fast → 3
+
+Step 1
+slow → 2
+fast → 0
+
+Step 2
+slow → 0
+fast → 2
+
+Step 3
+slow → -4
+fast → -4   ← MEET!
+
+✅ Cycle detected → return True
+
+❌ Example 3 (No Cycle)
+head = [1]
+1 → None
+
+Execution:
+slow → 1
+fast → 1
+fast.next = None → loop ends
+❌ No cycle → return False
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+⏱️ Time & Space Complexity
+Time: O(n)
+Space: O(1) ✅ (no extra memory)
+This is why Floyd’s algorithm is preferred over hashmap.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+🆚 Alternative (Using HashSet – less optimal)
+
+def hasCycle(self, head):
+    seen = set()
+    while head:
+        if head in seen:
+            return True
+        seen.add(head)
+        head = head.next
+    return False
+
+❌ Uses extra memory
+✅ Easier to understand, but not ideal for interviews
