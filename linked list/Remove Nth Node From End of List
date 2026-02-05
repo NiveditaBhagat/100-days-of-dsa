@@ -1,0 +1,137 @@
+** Remove Nth Node From End of List **
+
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+Example 1:
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+
+Example 2:
+Input: head = [1], n = 1
+Output: []
+
+Example 3:
+Input: head = [1,2], n = 1
+Output: [1]
+ 
+Constraints:
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Problem in Simple Words
+
+You are given:
+A linked list
+A number n
+
+You must:
+Remove the n-th node from the end
+Return the updated head
+
+❗ Key Challenge
+You don’t know the length of the list in advance.
+-----------------------------------------------------------------------------------------------------------------------------------------------
+✅ Best Approach: Two Pointers (Fast & Slow)
+Idea:
+Move fast pointer n steps ahead
+Then move both fast and slow together
+
+When fast reaches the end:
+👉 slow will be just before the node to delete
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🧩 Why Dummy Node is Important
+
+Using a dummy node avoids edge cases like:
+Removing the head node
+List with one element
+-----------------------------------------------------------------------------------------------------------------------------------------------
+✍️ Code (Optimal)
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        dummy = ListNode(0)
+        dummy.next = head
+
+        slow = dummy
+        fast = dummy
+
+        # Move fast n steps ahead
+        for _ in range(n):
+            fast = fast.next
+
+        # Move both until fast reaches last node
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+
+        # Remove nth node from end
+        slow.next = slow.next.next
+
+        return dummy.next
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🪜 Step-by-Step Example with Diagrams
+Example 1
+head = [1 → 2 → 3 → 4 → 5]
+n = 2
+
+Step 0: Initial Setup
+dummy → 1 → 2 → 3 → 4 → 5 → None
+slow ↑
+fast ↑
+
+Step 1: Move fast n steps (n = 2)
+fast → 2
+
+dummy → 1 → 2 → 3 → 4 → 5
+slow ↑
+       fast ↑
+
+Step 2: Move both until fast.next is None
+Iteration 1:
+slow → 1
+fast → 3
+
+Iteration 2:
+slow → 2
+fast → 4
+
+Iteration 3:
+slow → 3
+fast → 5
+
+Step 3: Remove node
+slow.next = slow.next.next
+Which removes node 4.
+
+Final List
+1 → 2 → 3 → 5
+
+🧪 Example 2
+head = [1]
+n = 1
+dummy → 1 → None
+After removal:
+[]
+-----------------------------------------------------------------------------------------------------------------------------------------------
+⏱️ Complexity
+
+Time: O(n)
+Space: O(1)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🔑 Key Takeaways 
+
+Two-pointer technique
+Dummy node simplifies edge cases
+One-pass solution
+Constant space
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Mental Trick to Remember
+“Keep a distance of n between fast and slow.”
