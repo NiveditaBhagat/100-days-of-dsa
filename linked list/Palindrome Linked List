@@ -1,0 +1,151 @@
+**Palindrome Linked List**
+
+Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+
+Example 1:
+Input: head = [1,2,2,1]
+Output: true
+
+Example 2:
+Input: head = [1,2]
+Output: false
+ 
+Constraints:
+The number of nodes in the list is in the range [1, 105].
+0 <= Node.val <= 9
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+A linked list is a palindrome if it reads the same forward and backward.
+
+Examples
+1 → 2 → 2 → 1   ✅ Palindrome
+1 → 2           ❌ Not Palindrome
+
+🚫 Why is this NOT easy like arrays?
+
+In arrays:
+arr[i] == arr[n-i-1]
+
+In linked lists:
+❌ No backward traversal
+❌ No indexing
+--------------------------------------------------------------------------------------------------------------------------------------------
+✅ Optimal Interview Approach (O(n) time, O(1) space)
+3 Main Steps
+Find the middle of the linked list
+Reverse the second half
+Compare first half and second half
+--------------------------------------------------------------------------------------------------------------------------------------------
+STEP 1️⃣: Find the Middle (Slow & Fast pointers)
+Idea
+
+slow moves 1 step
+fast moves 2 steps
+When fast reaches the end → slow is at middle.
+*******************************************************************
+🧠 Where this thinking REALLY comes from
+1️⃣ Relative speed intuition (from real life)
+Think of two people walking:
+Person A walks at 1 km/hr
+Person B walks at 2 km/hr
+If B reaches the destination when A is halfway, you naturally think:
+“Ah, B is twice as fast, so A covered half.”
+That’s the exact same idea.
+Linked list is just a road.
+Pointers are people walking.
+*******************************************************************
+
+Example
+1 → 2 → 2 → 1
+↑
+slow, fast
+
+
+After moving:
+1 → 2 → 2 → 1
+        ↑
+      slow
+fast = None
+
+
+So:
+First half: 1 → 2
+Second half starts from 2 → 1
+
+STEP 2️⃣: Reverse the Second Half
+Reverse:
+2 → 1
+
+Becomes:
+1 → 2
+
+Now structure is logically:
+First half : 1 → 2
+Second half: 1 → 2
+
+STEP 3️⃣: Compare Both Halves
+Compare node by node:
+1 == 1 ✔
+2 == 2 ✔
+
+All matched → Palindrome
+--------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Complete Code
+
+class Solution(object):
+    def isPalindrome(self, head):
+        if not head or not head.next:
+            return True
+
+        # Step 1: Find middle
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        # Step 2: Reverse second half
+        prev = None
+        while slow:
+            nxt = slow.next
+            slow.next = prev
+            prev = slow
+            slow = nxt
+
+        # Step 3: Compare
+        left = head
+        right = prev
+
+        while right:
+            if left.val != right.val:
+                return False
+            left = left.next
+            right = right.next
+
+        return True
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+🧪 Dry Run (Example: [1,2,2,1])
+
+Middle found:
+slow → 2
+
+Reverse second half:
+2 → 1  →  1 → 2
+
+Compare:
+1 == 1
+2 == 2
+✔ Palindrome
+
+⚠️ Odd Length Case
+
+Example:
+1 → 2 → 3 → 2 → 1
+
+Middle (3) doesn’t matter — it’s skipped naturally.
+Comparison still works perfectly.
+--------------------------------------------------------------------------------------------------------------------------------------------
+⏱ Complexity
+
+Time: O(n)
+Space: O(1)
