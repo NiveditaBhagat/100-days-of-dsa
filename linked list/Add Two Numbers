@@ -25,3 +25,16 @@ The number of nodes in each linked list is in the range [1, 100].
 It is guaranteed that the list represents a number that does not have leading zeros.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+What the problem is saying (very important)
+The number is stored REVERSED in the linked list.
+
+Example
+l1 = [2 → 4 → 3]  → number is 342
+l2 = [5 → 6 → 4]  → number is 465
+
+We add:
+342 + 465 = 807
+
+Return reversed again:
+[7 → 0 → 8]
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
