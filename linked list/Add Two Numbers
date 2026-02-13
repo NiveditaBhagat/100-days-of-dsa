@@ -38,3 +38,9 @@ We add:
 Return reversed again:
 [7 → 0 → 8]
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Key idea 🧠 (think like addition on paper)
+
+Add digit by digit
+Keep a carry
+Move forward in both lists
+If one list ends, treat its value as 0
