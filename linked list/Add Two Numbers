@@ -182,5 +182,189 @@ l2 = [5 → 6 → 7]
 
 After l1 ends, we still add:
 0 + 7
-
 Same logic for val2.
+
+
+5️⃣ Add values + carry
+total = val1 + val2 + carry
+
+Example:
+4 + 6 + 1 = 11
+
+
+6️⃣ Split total into digit and carry
+carry = total // 10
+digit = total % 10
+
+Example:
+total = 11
+carry = 1
+digit = 1
+
+7️⃣ Create new node
+curr.next = ListNode(digit)
+curr = curr.next
+
+This grows the result list:
+dummy → 7 → 0 → 8
+            ↑
+          curr
+
+8️⃣ Move input list pointers
+if l1:
+    l1 = l1.next
+
+if l2:
+    l2 = l2.next
+
+Move forward only if they exist.
+
+9️⃣ Final return
+return dummy.next
+
+Because:
+dummy → 7 → 0 → 8
+
+We skip dummy and return the real head.
+
+Mental model (remember this 🧠)
+“Take digits → add with carry → write digit → move pointers”
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Example
+Input
+l1 = [9, 9, 9, 9]
+l2 = [9, 9]
+
+This represents:
+9999 + 99 = 10098
+
+Expected output (reversed):
+[8, 9, 0, 0, 1]
+
+Initial setup
+dummy → 0
+curr  → dummy
+carry = 0
+
+l1 → 9 → 9 → 9 → 9 → Ø
+l2 → 9 → 9 → Ø
+
+Iteration 1
+Values :-
+val1 = 9
+val2 = 9
+carry = 0
+
+Add :-
+total = 9 + 9 + 0 = 18
+digit = 8
+carry = 1
+
+Result list :-
+dummy → 8
+        ↑
+       curr
+
+Move pointers ;-
+l1 → 9 → 9 → 9
+l2 → 9
+
+Iteration 2
+Values:-
+val1 = 9
+val2 = 9
+carry = 1
+
+Add :-
+total = 9 + 9 + 1 = 19
+digit = 9
+carry = 1
+
+Result list :-
+dummy → 8 → 9
+            ↑
+           curr
+
+Move pointers:-
+l1 → 9 → 9
+l2 → Ø
+
+Iteration 3
+Values:-
+val1 = 9
+val2 = 0   (because l2 is finished)
+carry = 1
+
+Add :-
+total = 9 + 0 + 1 = 10
+digit = 0
+carry = 1
+
+Result list :-
+dummy → 8 → 9 → 0
+                ↑
+               curr
+
+Move pointers :-
+l1 → 9
+l2 → Ø
+
+Iteration 4
+Values :-
+val1 = 9
+val2 = 0
+carry = 1
+
+Add :-
+total = 9 + 0 + 1 = 10
+digit = 0
+carry = 1
+
+Result list :-
+dummy → 8 → 9 → 0 → 0
+                    ↑
+                   curr
+
+Move pointers :-
+l1 → Ø
+l2 → Ø
+
+Iteration 5 (IMPORTANT 🚨)
+Even though both lists ended:
+carry = 1
+
+So loop continues.
+
+Values :-
+val1 = 0
+val2 = 0
+carry = 1
+
+Add :-
+total = 1
+digit = 1
+carry = 0
+
+Result list :-
+dummy → 8 → 9 → 0 → 0 → 1
+                        ↑
+                       curr
+
+Loop ends
+l1 = None
+l2 = None
+carry = 0
+
+Final answer
+
+Return:
+dummy.next → [8, 9, 0, 0, 1]
+
+Key takeaways 🧠
+You add digit by digit
+If a list ends → use 0
+Carry can create a new node
+Dummy node avoids edge cases
+
