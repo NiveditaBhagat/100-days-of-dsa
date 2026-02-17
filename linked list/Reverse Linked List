@@ -1,0 +1,61 @@
+** Reverse Linked List **
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+Example 1:
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+
+Example 2:
+Input: head = [1,2]
+Output: [2,1]
+
+Example 3:
+Input: head = []
+Output: []
+ 
+Constraints:
+The number of nodes in the list is the range [0, 5000].
+-5000 <= Node.val <= 5000
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Problem in simple words
+
+You are given a linked list:
+1 → 2 → 3 → 4 → 5 → None
+
+
+You must reverse it to:
+5 → 4 → 3 → 2 → 1 → None
+
+And return the new head (5).
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+🔑 Key idea (ONE LINE)
+
+At every step, reverse one arrow.
+
+🧩 Why reversing is tricky
+Because a linked list only knows next, not previous.
+So before breaking a link, we must save the next node.
+
+🧱 The 3-pointer technique 
+We use three pointers:
+prev   → node behind (initially None)
+curr   → current node (starts at head)
+next   → next node (temporary)
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+✅ Code (Iterative)
+
+class Solution(object):
+    def reverseList(self, head):
+        prev = None
+        curr = head
+
+        while curr:
+            nxt = curr.next     # 1️⃣ save next
+            curr.next = prev    # 2️⃣ reverse arrow
+            prev = curr         # 3️⃣ move prev forward
+            curr = nxt          # 4️⃣ move curr forward
+
+        return prev
