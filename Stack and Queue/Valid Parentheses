@@ -27,3 +27,139 @@ Example 5:
 Input: s = "([)]"
 Output: false
 -------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Core idea (intuition)
+
+Stack keeps track of opening brackets
+When we see a closing bracket, it must match the most recent opening bracket
+If anything mismatches → invalid
+At the end, stack must be empty
+-------------------------------------------------------------------------------------------------------------------------------------------
+🔹 Code
+class Solution(object):
+    def isValid(self, s):
+        stack = []
+        pairs = {')': '(', ']': '[', '}': '{'}
+
+        for ch in s:
+            if ch in '([{':
+                stack.append(ch)
+            else:
+                if not stack:
+                    return False
+                if stack.pop() != pairs[ch]:
+                    return False
+
+        return len(stack) == 0
+-------------------------------------------------------------------------------------------------------------------------------------------
+🔍 Line-by-line explanation
+1️⃣ Stack initialization
+stack = []
+This stores opening brackets: '(', '{', '['
+
+
+2️⃣ Mapping closing → opening
+pairs = {')': '(', ']': '[', '}': '{'}
+
+Why?
+If we see ')', we expect '(' on top of the stack
+Makes matching easy and clean
+
+3️⃣ Loop through each character
+for ch in s:
+Process the string left to right
+
+4️⃣ If opening bracket → push
+if ch in '([{':
+    stack.append(ch)
+
+Example:
+s = "([]"
+stack changes:
+( → ['(']
+[ → ['(', '[']
+
+5️⃣ Else → closing bracket
+else:
+This means ch is one of:
+
+) ] }
+
+6️⃣ Empty stack check
+if not stack:
+    return False
+
+📌 Meaning:
+You are trying to close a bracket that was never opened
+Example:
+")"
+❌ invalid immediately
+
+7️⃣ Match with top of stack
+if stack.pop() != pairs[ch]:
+    return False
+
+What happens:
+Remove the latest opening bracket
+Check if it matches the closing bracket
+
+
+Example:
+s = "(]"
+stack = ['(']
+pop → '('
+pairs[']'] → '['
+'(' != '[' ❌
+So → invalid
+
+8️⃣ Final stack check
+return len(stack) == 0
+Why?
+Any leftover opening brackets means they were never closed
+
+Example:
+s = "(("
+stack = ['(', '('] → ❌ invalid
+
+
+✅ Valid example walkthrough
+Input: "([])"
+( → push → ['(']
+[ → push → ['(', '[']
+] → pop '[' → match ✔
+) → pop '(' → match ✔
+end → stack empty ✔
+Result → True
+
+❌ Invalid example walkthrough
+Input: "([)]"
+( → ['(']
+[ → ['(', '[']
+) → pop '[' but expected '(' ❌
+Result → False
+-------------------------------------------------------------------------------------------------------------------------------------------
+⏱ Time Complexity
+O(n)
+n = length of string
+Each character is:
+pushed once
+popped once
+All operations are O(1)
+✔ Optimal solution
+
+🧠 Space Complexity
+O(n) (worst case)
+Worst case: all opening brackets
+"((((((("
+Stack size = n
+
+🧪 Edge cases handled
+Case	      Output
+""	         True
+"("	        False
+")"	        False
+"()[]{}"	   True
+"[(])"	     False
+-------------------------------------------------------------------------------------------------------------------------------------------
+🧠 One-line memory trick
+
+Stack = last opened bracket must be closed first
