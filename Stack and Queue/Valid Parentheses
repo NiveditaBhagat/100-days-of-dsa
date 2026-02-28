@@ -33,6 +33,7 @@ Stack keeps track of opening brackets
 When we see a closing bracket, it must match the most recent opening bracket
 If anything mismatches → invalid
 At the end, stack must be empty
+
 -------------------------------------------------------------------------------------------------------------------------------------------
 🔹 Code
 class Solution(object):
