@@ -1,6 +1,7 @@
 ** Daily Temperatures **
 
-Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. 
+If there is no future day for which this is possible, keep answer[i] == 0 instead.
 
 
 Example 1:
@@ -19,3 +20,290 @@ Output: [1,1,0]
 Constraints:
 1 <= temperatures.length <= 105
 30 <= temperatures[i] <= 100
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1️⃣ Problem Understanding
+
+You are given temperatures for each day.
+For each day i, you must find:
+How many days later will a warmer temperature appear?
+If no warmer day exists → 0.
+
+Example
+Input
+[73,74,75,71,69,72,76,73]
+
+Output
+[1,1,4,2,1,1,0,0]
+
+Example explanation:
+Day 0 → 73
+Next warmer = 74 on day 1
+Days waited = 1
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2️⃣ Brute Force Idea (slow)
+
+For every day, check the next days until you find a warmer temperature.
+
+Example:
+73 → check 74 → found
+75 → check 71,69,72,76 → found at 76
+
+Time complexity:
+O(n²)
+Too slow for large input.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3️⃣ Optimized Idea (Stack)
+
+We use a stack to store indices of temperatures.
+
+Important rule:
+The stack will store days whose warmer temperature is not found yet.
+
+# Key Idea
+When we find a warmer temperature, we resolve previous days.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4️⃣ Code (Python)
+class Solution(object):
+    def dailyTemperatures(self, temperatures):
+        stack = []
+        answer = [0] * len(temperatures)
+
+        for i in range(len(temperatures)):
+
+            while stack and temperatures[i] > temperatures[stack[-1]]:
+                prev = stack.pop()
+                answer[prev] = i - prev
+
+            stack.append(i)
+
+        return answer
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## Create the stack
+stack = []
+
+We use a stack to store indices of days.
+
+Important:
+We store indices, not temperatures.
+
+Example stack:
+stack = [0,1,2]
+
+Meaning:
+day 0 → temp 73
+day 1 → temp 74
+day 2 → temp 75
+
+These are days waiting for a warmer temperature.
+___________________________________________________________
+## Create result array
+answer = [0] * len(temperatures)
+
+We create an array filled with zeros.
+
+Example:
+answer = [0,0,0,0,0,0,0,0]
+
+Why zeros?
+Because if no warmer day exists, the answer must stay 0.
+___________________________________________________________
+
+## Loop through all days
+for i in range(len(temperatures)):
+
+We iterate through each day.
+
+i = current day index
+
+Example loop:
+i = 0 → 73
+i = 1 → 74
+i = 2 → 75
+...
+___________________________________________________________
+
+## Check if current temperature resolves previous days
+while stack and temperatures[i] > temperatures[stack[-1]]:
+
+This line has two conditions.
+
+* Condition 1
+ stack
+
+Means:
+stack is not empty
+
+* Condition 2
+temperatures[i] > temperatures[stack[-1]]
+
+Meaning:
+current temperature > temperature of last unresolved day
+
+stack[-1] gives top of stack.
+
+Example:
+stack = [0,1]
+stack[-1] = 1
+
+Temperature:
+temperatures[1] = 74
+___________________________________________________________
+
+* Remove the previous day
+prev = stack.pop()
+
+We remove the previous unresolved day.
+
+Example:
+stack = [0,1]
+pop → prev = 1
+stack = [0]
+
+Day 1 was waiting for a warmer day.
+Now we found it.
+___________________________________________________________
+
+* Calculate number of days waited
+answer[prev] = i - prev
+
+We compute:
+current_day - previous_day
+
+Example:
+prev = 1
+i = 2
+answer[1] = 2 - 1 = 1
+
+Meaning:
+Day 1 waits 1 day for warmer temperature
+___________________________________________________________
+* Add current day to stack
+stack.append(i)
+
+We push the current day into the stack.
+Why?
+Because this day might need a future warmer day.
+
+Example:
+stack = [2]
+
+Meaning:
+Day 2 is waiting for a warmer temperature
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5️⃣ Step-by-Step Example
+
+Temperatures:
+[73,74,75,71,69,72,76,73]
+
+We keep:
+stack = []     (stores indices)
+answer = [0,0,0,0,0,0,0,0]
+
+Day 0 → 73
+Stack empty → push index
+stack = [0]
+
+Day 1 → 74
+Compare with stack top:
+temps[1] > temps[0]
+74 > 73 ✔
+
+So warmer day found for day 0.
+answer[0] = 1 - 0 = 1
+
+Pop stack.
+Push current index.
+stack = [1]
+
+Day 2 → 75
+75 > 74 ✔
+answer[1] = 2 - 1 = 1
+Stack becomes
+stack = [2]
+
+Day 3 → 71
+71 < 75
+No warmer temperature.
+Push index.
+stack = [2,3]
+
+Day 4 → 69
+69 < 71
+Push
+stack = [2,3,4]
+
+Day 5 → 72
+Now check stack:
+72 > 69 ✔
+answer[4] = 5 - 4 = 1
+
+Stack now
+[2,3]
+
+Next:
+72 > 71 ✔
+answer[3] = 5 - 3 = 2
+
+Stack
+[2]
+
+Next:
+72 < 75 ❌
+
+Push 5
+stack = [2,5]
+
+
+Day 6 → 76
+Now resolve many:
+76 > 72
+answer[5] = 1
+76 > 75
+answer[2] = 4
+Stack becomes
+[6]
+
+Day 7 → 73
+73 < 76
+Push.
+stack = [6,7]
+End.
+Remaining stack → no warmer day → answer stays 0.
+
+Final answer:
+[1,1,4,2,1,1,0,0]
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6️⃣ Time Complexity
+O(n)
+
+Reason:
+Each index is:
+pushed once
+popped once
+Total operations ≤ 2n.
+
+7️⃣ Space Complexity
+O(n)
+
+Worst case stack holds all indices.
+Example:
+[90,80,70,60]
+No warmer days.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8️⃣ Pattern to Recognize
+
+This problem is a Monotonic Decreasing Stack.
+Stack keeps temperatures like:
+75
+71
+69
+
+Decreasing order.
+When a bigger value appears → resolve.
+
+
