@@ -24,4 +24,141 @@ Constraints:
 s and t only contain lowercase letters and '#' characters.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
+🧩 Problem Understanding
 
+You are given:
+s = "ab#c"
+t = "ad#c"
+
+Rules:
+normal character → type it
+'#' → delete previous character
+if nothing to delete → ignore
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Core Idea
+We simulate typing using a stack.
+
+Think:
+stack = what is currently written on screen
+
+✅ Approach (Stack)
+Algorithm:
+for each character:
+    if letter → push to stack
+    if '#' → pop (if possible)
+-----------------------------------------------------------------------------------------------------------------------------------------------
+✅ Final Code 
+
+class Solution(object):
+    def backspaceCompare(self, s, t):
+
+        def build(string):
+            stack = []
+
+            for ch in string:
+                if ch == "#":
+                    if stack:
+                        stack.pop()
+                else:
+                    stack.append(ch)
+
+            return stack
+
+        return build(s) == build(t)
+-----------------------------------------------------------------------------------------------------------------------------------------------
+✅ Approach (Stack)
+
+Algorithm:
+for each character:
+    if letter → push to stack
+    if '#' → pop (if possible)
+
+🧪 Detailed Walkthroughs
+🔹 Example 1
+s = "ab#c"
+t = "ad#c"
+
+🔸 Process s
+start: []
+a → [a]
+b → [a, b]
+# → pop → [a]
+c → [a, c]
+Final:
+s → "ac"
+
+🔸 Process t
+start: []
+a → [a]
+d → [a, d]
+# → pop → [a]
+c → [a, c]
+Final:
+t → "ac"
+
+✅ Compare
+"ac" == "ac" → TRUE
+
+🔹 Example 2
+s = "ab##"
+t = "c#d#"
+
+🔸 Process s
+a → [a]
+b → [a, b]
+# → [a]
+# → []
+Final:
+""
+
+🔸 Process t
+c → [c]
+# → []
+d → [d]
+# → []
+Final:
+""
+
+✅ Compare
+"" == "" → TRUE
+
+
+🔹 Example 3
+s = "a#c"
+t = "b"
+
+🔸 Process s
+a → [a]
+# → []
+c → [c]
+Final:
+"c"
+
+🔸 Process t
+b → [b]
+Final:
+"b"
+❌ Compare
+"c" != "b" → FALSE
+
+
+⚠️ Important Edge Case
+s = "###a"
+# → []
+# → []
+# → []
+a → [a]
+
+👉 This is why we must do:
+if stack:
+    stack.pop()
+-----------------------------------------------------------------------------------------------------------------------------------------------
+⏱ Complexity
+Time:
+O(n + m)
+We process both strings once.
+
+Space:
+O(n + m)
+Stacks store characters.
+-----------------------------------------------------------------------------------------------------------------------------------------------
