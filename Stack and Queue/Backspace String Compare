@@ -162,3 +162,141 @@ Space:
 O(n + m)
 Stacks store characters.
 -----------------------------------------------------------------------------------------------------------------------------------------------
+🚀 Follow-up: O(1) Space (IMPORTANT)
+
+Now the interview-level optimization.
+
+🧠 Idea
+Instead of building strings:
+👉 Traverse from right to left
+👉 Skip characters that should be deleted
+
+🔥 Intuition
+'#' = skip next character
+-----------------------------------------------------------------------------------------------------------------------------------------------
+✅ Code (O(1) space)
+
+class Solution(object):
+    def backspaceCompare(self, s, t):
+
+        i = len(s) - 1
+        j = len(t) - 1
+
+        skipS = 0
+        skipT = 0
+
+        while i >= 0 or j >= 0:
+
+            while i >= 0:
+                if s[i] == "#":
+                    skipS += 1
+                    i -= 1
+                elif skipS > 0:
+                    skipS -= 1
+                    i -= 1
+                else:
+                    break
+
+            while j >= 0:
+                if t[j] == "#":
+                    skipT += 1
+                    j -= 1
+                elif skipT > 0:
+                    skipT -= 1
+                    j -= 1
+                else:
+                    break
+
+            if i >= 0 and j >= 0:
+                if s[i] != t[j]:
+                    return False
+            elif i >= 0 or j >= 0:
+                return False
+
+            i -= 1
+            j -= 1
+
+        return True
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Core Idea Reminder
+
+Go from RIGHT → LEFT
+"#" = skip characters
+
+We maintain:
+i → pointer for s
+j → pointer for t
+skipS → how many chars to skip in s
+skipT → how many chars to skip in t
+
+🧪 Example Walkthrough (DETAILED)
+s = "ab#c"
+t = "ad#c"
+
+🔹 Initial State
+s: a  b  #  c
+            ↑ i
+
+t: a  d  #  c
+            ↑ j
+
+skipS = 0
+skipT = 0
+
+🔸 Step 1: Compare last characters
+s[i] = c
+t[j] = c
+
+✅ Match
+Move both:
+i = 2
+j = 2
+
+
+🔸 Step 2: Handle '#'
+s[i] = #
+t[j] = #
+So:
+skipS = 1
+skipT = 1
+i = 1
+j = 1
+
+
+🔸 Step 3: Skip characters
+Now:
+s[i] = b
+skipS = 1 → skip it
+skipS = 0
+i = 0
+
+Same for t:
+t[j] = d
+skipT = 1 → skip it
+skipT = 0
+j = 0
+
+
+🔸 Step 4: Compare again
+s[i] = a
+t[j] = a
+✅ Match
+Move both:
+i = -1
+j = -1
+🔹 End Condition
+Both pointers finished → TRUE ✅
+-----------------------------------------------------------------------------------------------------------------------------------------------
+🧠 Key Visualization Trick
+
+Think like this:
+Typing forward ❌
+Undo simulation ❌
+
+Instead:
+We scan backward and "ignore deleted characters"
+
+💡 Golden Rule
+'#' → increase skip
+letter + skip > 0 → ignore it
+letter + skip = 0 → valid character
