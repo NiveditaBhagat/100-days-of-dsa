@@ -5,7 +5,7 @@ You want to maximize your profit by choosing a single day to buy one stock and c
 Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
 
-Example 1:
+**Example 1:**
 
 Input: prices = [7,1,5,3,6,4]
 
@@ -15,7 +15,7 @@ Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-
 Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
 
 
-Example 2:
+**Example 2:**
 
 Input: prices = [7,6,4,3,1]
 
@@ -40,7 +40,7 @@ Buy at the lowest price
 
 Sell at a higher price later
 
-~While scanning prices:
+**~While scanning prices:**
 
 Keep track of the minimum price seen so far
 
@@ -52,13 +52,13 @@ Keep updating the maximum profit
 
 ## 🪜 Approach (One-Pass Greedy)
 
-~ Initialize:
+**~ Initialize:**
 
 min_price → very large value
 
 max_profit → 0
 
-~Loop through prices:
+**~Loop through prices:**
 
 Update min_price if current price is lower
 
