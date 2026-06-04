@@ -1,4 +1,4 @@
-## Best Time to Buy and Sell Stock
+# Best Time to Buy and Sell Stock
 
 You are given an array prices where prices[i] is the price of a given stock on the ith day.
 You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
@@ -32,7 +32,7 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 
 ------------------------------------------------------------------------
 
-# 🧠 Key Insight (Core Idea)
+## 🧠 Key Insight (Core Idea)
 
 ~To maximize profit:
 
@@ -50,7 +50,7 @@ Keep updating the maximum profit
 
 ---------------------------------------------------------------------------
 
-# 🪜 Approach (One-Pass Greedy)
+## 🪜 Approach (One-Pass Greedy)
 
 ~ Initialize:
 
@@ -70,7 +70,7 @@ Return max_profit
 
 ----------------------------------------------------------------------------
 
-# ✅ Why This Works
+## ✅ Why This Works
 
 You always buy before selling
 
@@ -80,7 +80,7 @@ One pass → optimal and efficient
 
 ------------------------------------------------------------------------------
 
-# 🧪 Example Walkthrough
+## 🧪 Example Walkthrough
 
 Input:
 
@@ -98,14 +98,14 @@ Day	Price	MinPrice	Profit	Max Profit
 
 --------------------------------------------------------------------------------
 
-# ⏱ Time & Space Complexity
+## ⏱ Time & Space Complexity
 
 Time: O(n)
 Space: O(1)
 
 ---------------------------------------------------------------------------------
 
-# 🚫 Common Mistakes
+## 🚫 Common Mistakes
 
 ❌ Nested loops → O(n²) (TLE)
 
@@ -114,7 +114,7 @@ Space: O(1)
 ❌ Overthinking with all combinations
 
 ---------------------------------------------------------------------------------
-# 🔑 Pattern Name (Important for Interviews)
+## 🔑 Pattern Name (Important for Interviews)
 
 Greedy
 
