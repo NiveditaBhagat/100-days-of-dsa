@@ -32,7 +32,7 @@ Output: [0,1]
 
 -109 <= target <= 109
 
----
+
 ## Hint
 - Think about what **second number** is required to reach the target.
   
@@ -40,12 +40,12 @@ Output: [0,1]
   
 - Check for the required number **before** storing the current one.
   
----
+
 
 ## Approach
 Use a hash map to store numbers already seen along with their indices.
 
----
+
 
 ## Time and Space Complexity
 
@@ -53,7 +53,7 @@ Time Complexity: O(n)
 
 Space Complexity: O(n)
 
----
+
 
 ## Common Mistakes
 
@@ -65,7 +65,7 @@ Using the same element twice
 
 Adding the number to the map before checking its complement
 
----
+
 
 ## Key Insight
 
