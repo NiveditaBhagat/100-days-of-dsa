@@ -84,7 +84,9 @@ Space: O(1)
 🚫 Common Mistakes
 
 ❌ Nested loops → O(n²) (TLE)
+
 ❌ Selling before buying
+
 ❌ Overthinking with all combinations
 
 ---------------------------------------------------------------------------------
