@@ -30,7 +30,7 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 
 0 <= prices[i] <= 104
 
-------------------------------------------------------------------------
+
 
 ## 🧠 Key Insight (Core Idea)
 
@@ -48,7 +48,7 @@ For each day, calculate the profit if sold today
 
 Keep updating the maximum profit
 
----------------------------------------------------------------------------
+
 
 ## 🪜 Approach (One-Pass Greedy)
 
@@ -68,7 +68,7 @@ Update max_profit
 
 Return max_profit
 
-----------------------------------------------------------------------------
+
 
 ## ✅ Why This Works
 
@@ -78,7 +78,7 @@ You only care about the lowest buying price before today
 
 One pass → optimal and efficient
 
-------------------------------------------------------------------------------
+
 
 ## 🧪 Example Walkthrough
 
@@ -99,14 +99,14 @@ prices = [7, 1, 5, 3, 6, 4]
 
 ✅ **Answer = 5**
 
---------------------------------------------------------------------------------
+
 
 ## ⏱ Time & Space Complexity
 
 Time: O(n)
 Space: O(1)
 
----------------------------------------------------------------------------------
+
 
 ## 🚫 Common Mistakes
 
@@ -116,7 +116,7 @@ Space: O(1)
 
 ❌ Overthinking with all combinations
 
----------------------------------------------------------------------------------
+
 ## 🔑 Pattern Name (Important for Interviews)
 
 Greedy
@@ -125,4 +125,4 @@ Min so far / Max difference
 
 Kadane-like thinking
 
----------------------------------------------------------------------------------
+
