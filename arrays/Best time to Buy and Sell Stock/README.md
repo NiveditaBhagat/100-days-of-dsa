@@ -52,7 +52,7 @@ Keep updating the maximum profit
 
 ## 🪜 Approach (One-Pass Greedy)
 
-**~ Initialize:**
+**~Initialize:**
 
 min_price → very large value
 
