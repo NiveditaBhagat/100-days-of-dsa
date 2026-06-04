@@ -34,7 +34,7 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 
 ## 🧠 Key Insight (Core Idea)
 
-~To maximize profit:
+**~To maximize profit:**
 
 Buy at the lowest price
 
