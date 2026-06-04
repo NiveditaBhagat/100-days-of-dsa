@@ -1,4 +1,4 @@
-1. Two Sum
+Two Sum
 
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -32,23 +32,7 @@ Constraints:
 ## Approach
 Use a hash map to store numbers already seen along with their indices.
 
------------------------------------------------------------------------------------------------------------------------------
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        seen_nums={}
 
-        for index, value in enumerate(nums):
-            num1=target-value
-            if num1 in seen_nums:
-                return [seen_nums[num1],index]
-            seen_nums[value]=index
-
----------------------------------------------------------------------------------------------------------------------------------     
 
 ## Time and Space Complexity
 Time Complexity: O(n)
