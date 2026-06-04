@@ -86,13 +86,19 @@ Input:
 
 prices = [7, 1, 5, 3, 6, 4]
 
-Day	Price	MinPrice	Profit	Max Profit
-0	    7	     7  	     0	    0
-1	    1	     1	       0	    0
-2	    5	     1	       4	    4
-3	    3	     1	       2	    4
-4	    6	     1	       5	    5
-5	    4	     1	       3	    5
+Day	 Price	 MinPrice	 Profit	 Max Profit
+
+0	    7	     7  	     0	         0
+
+1	    1	     1	       0	         0
+
+2	    5	     1	       4	         4
+
+3	    3	     1	       2	         4
+
+4	    6	     1	       5	         5
+
+5	    4	     1	       3	         5
 
 ✅ Answer = 5
 
