@@ -1,4 +1,4 @@
-# Maximum Subarray**
+# Maximum Subarray
 
 Given an integer array nums, find the subarray with the largest sum, and return its sum.
 
@@ -41,7 +41,9 @@ Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
 ## 🧠 Core Idea (Kadane’s Algorithm)
 
 At each index, you decide:
-❓ Is it better to extend the previous subarray, or start a new subarray here?
+
+Is it better to extend the previous subarray, or start a new subarray here?
+
 If the previous sum becomes negative, it will only hurt future sums → drop it.
 
 
@@ -49,6 +51,7 @@ If the previous sum becomes negative, it will only hurt future sums → drop it.
 ## 🔑 Key Observation
 
 A negative running sum is useless
+
 Always keep track of the maximum sum seen so far
 
 
@@ -71,18 +74,7 @@ max_sum = max(max_sum, curr_sum)
 Return max_sum
 
 
-🧾 Python Solution
 
-class Solution(object):
-    def maxSubArray(self, nums):
-        curr_sum = nums[0]
-        max_sum = nums[0]
-
-        for i in range(1, len(nums)):
-            curr_sum = max(nums[i], curr_sum + nums[i])
-            max_sum = max(max_sum, curr_sum)
-
-        return max_sum
 
 
 
