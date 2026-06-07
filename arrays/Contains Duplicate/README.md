@@ -1,6 +1,7 @@
-#Contains Duplicate
+# Contains Duplicate
 
 Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
 
 **Example 1:**
 
@@ -12,6 +13,7 @@ Explanation:
 
 The element 1 occurs at the indices 0 and 3.
 
+
 **Example 2:**
 
 Input: nums = [1,2,3,4]
@@ -22,25 +24,31 @@ Explanation:
 
 All elements are distinct.
 
+
 **Example 3:**
 
 Input: nums = [1,1,1,3,3,4,3,2,4,2]
 
 Output: true
 
+
  
 **Constraints:**
+
 1 <= nums.length <= 105
 
 -109 <= nums[i] <= 109
 
 
 
+
 ## 🧠 Key Insight (Core Idea)
+
 
 **~Duplicates mean:**
 
 An element appears more than once
+
 
 **~To detect this efficiently:**
 
@@ -55,9 +63,12 @@ An element appears more than once
 
 ## 🪜 Approach (Using Hash Set)
 
+
 Create an empty set seen
 
+
 **Traverse the array:**
+
 
 If the element is already in seen → return True
 
@@ -67,11 +78,14 @@ If traversal finishes → return False
 
 
 
-##✅ Why This Works
+## ✅ Why This Works
+
 
 Set lookup is O(1)
 
+
 The moment we see a repeated value, we stop
+
 
 No need to compare every pair
 
@@ -116,6 +130,7 @@ Space: O(n)
 
 
 
+
 ## 💡 Hint (For Recall)
 
 “If set size is smaller than array size → duplicates exist.”
@@ -125,6 +140,7 @@ Alternate one-liner:
 return len(nums) != len(set(nums))
 
 
+
 ## 🚫 Common Mistakes
 
 ❌ Nested loops → O(n²) (inefficient)
@@ -132,6 +148,7 @@ return len(nums) != len(set(nums))
 ❌ Sorting just to check duplicates (extra cost)
 
 ❌ Forgetting set lookup is O(1)
+
 
 
 ## 🔑 Pattern Name (Important for Interviews)
