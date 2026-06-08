@@ -1,4 +1,3 @@
-Yes. If you're a "math-style learner", I'd build a **DSA Formula Book**.
 
 Think of these as the equivalent of:
 
