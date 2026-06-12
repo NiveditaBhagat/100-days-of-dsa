@@ -62,19 +62,6 @@ We group strings using this signature as the hash key.
 * Group original strings under that key
 
 
-🧾 Code (Sorting Based)
-from collections import defaultdict
-
-class Solution(object):
-    def groupAnagrams(self, strs):
-        groups = defaultdict(list)
-
-        for word in strs:
-            key = ''.join(sorted(word))
-            groups[key].append(word)
-
-        return list(groups.values())
-
 
 ## 🧪 Example Walkthrough
 
@@ -112,25 +99,7 @@ Space: O(n)
 
 * Use a tuple of counts as key
 
-
-🧾 Code (Frequency Based)
-
-from collections import defaultdict
-
-class Solution(object):
-    def groupAnagrams(self, strs):
-        groups = defaultdict(list)
-
-        for word in strs:
-            count = [0] * 26
-            for ch in word:
-                count[ord(ch) - ord('a')] += 1
-
-            groups[tuple(count)].append(word)
-
-        return list(groups.values())
         
-
 ## ✅ Correct Approach (HashMap + Character Count)
 
 Step-by-step plan
