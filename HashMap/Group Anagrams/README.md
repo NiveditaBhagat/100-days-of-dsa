@@ -371,7 +371,7 @@ groups = {}
 
 
 ```python
-for word in strs:**
+for word in strs:
 ```
 
 Loop through each word in the input list strs.
