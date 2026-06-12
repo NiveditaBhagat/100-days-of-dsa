@@ -355,7 +355,9 @@ All three generate the **same key**, so they are grouped together automatically.
 
 ## 🔁 Code Explanation
 
+```python
 groups = defaultdict(list)
+```
 
 Creates a defaultdict where the default value is an empty list [].
 
