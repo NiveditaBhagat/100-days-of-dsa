@@ -67,7 +67,7 @@ word1 and word2 consist of lowercase English letters.
 
 **Two Pointers / Parallel Traversal**
 
----
+
 
 ## Recognition
 
@@ -78,7 +78,7 @@ Use this pattern when the question contains:
 * Interleave characters
 * Take one element from each structure
 
----
+
 
 ## Intuition
 
@@ -88,7 +88,7 @@ Traverse both strings simultaneously.
 * Take one character from `word2`
 * If one string ends, append the remaining characters from the other string.
 
----
+
 
 ## Algorithm
 
@@ -98,7 +98,6 @@ Traverse both strings simultaneously.
 4. If the index exists in `word2`, append that character.
 5. Return the merged string.
 
----
 
 ## Code
 
@@ -121,7 +120,7 @@ class Solution(object):
         return result
 ```
 
----
+
 
 ## Walkthrough
 
@@ -152,7 +151,7 @@ append s -> "apbqrs"
 Output = "apbqrs"
 ```
 
----
+
 
 ## Dry Run
 
@@ -163,7 +162,7 @@ Output = "apbqrs"
 | 2 | append r   | apbqr  |
 | 3 | append s   | apbqrs |
 
----
+
 
 ## Edge Cases
 
@@ -199,7 +198,7 @@ Output:
 ab
 ```
 
----
+
 
 ## Complexity
 
@@ -215,7 +214,7 @@ m = length of word1
 
 n = length of word2
 
----
+
 
 ## Template
 
@@ -233,7 +232,7 @@ for i in range(max(len(first), len(second))):
 return result
 ```
 
----
+
 
 ## Common Mistakes
 
@@ -243,7 +242,7 @@ return result
 
 ❌ Access an index without checking bounds.
 
----
+
 
 ## Similar Problems
 
@@ -253,7 +252,7 @@ return result
 * Move Zeroes
 * Two Sum II
 
----
+
 
 ## Interview Takeaway
 
